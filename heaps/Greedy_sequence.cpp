@@ -5,6 +5,8 @@
 
 using namespace std;
 
+typedef pair<long long, long long> valueAndindex;
+
 bool cmp(pair<long long, long long> a, pair<long long, long long> b)
 {
 	return (a.second < b.second);
@@ -12,7 +14,7 @@ bool cmp(pair<long long, long long> a, pair<long long, long long> b)
 
 class min_bheap
 {
-	vector<pair<long long, long long>> heap;
+	vector<valueAndindex> heap;
 
 public:
 	int heapSize()
@@ -20,13 +22,13 @@ public:
 		return (heap.size());
 	}
 
-	void add(pair<long long, long long> value)
+	void add(valueAndindex value)
 	{
 		heap.push_back(value);
 		int i = heapSize() - 1;
 		int parent = (i - 1) / 2;
 
-		while ((i > 0) && (heap[parent].first > heap[i].first) || ((heap[parent].first==heap[i].first)&& (heap[parent].second>heap[i].second)))
+		while (i > 0 && heap[parent] > heap[i])
 		{
 			swap(heap[i], heap[parent]);
 			i = parent;
@@ -78,13 +80,13 @@ public:
 		return result;
 	}
 
-	int getElement(int i)
+	vector<valueAndindex> getElement()
 	{
-		return (heap[i].first);
+		return (heap);
 	}
 };
 
-min_bheap heap_sequence;
+min_bheap heap;
 
 int main()
 {
@@ -97,24 +99,21 @@ int main()
 	fin >> N >> M;
 	for (long long i = 0; i < N; i++)
 	{
-		long long k;
+		long long int k;
 		fin >> k;
-		heap_sequence.add(make_pair(k, i));
+		heap.add(make_pair(k, i));
 	}
-	for (long long int i = 0; i < M; i++)
+
+	for (long long i = 0; i < M; i++)
 	{
-		long long min1 = heap_sequence.pickMin();
-		long long min2 = heap_sequence.pickMin();
-		heap_sequence.add(make_pair(min1 + min2, N + i));
+		long long min1 = heap.pickMin();
+		long long min2 = heap.pickMin();
+		heap.add(make_pair(min1 + min2, N));
 	}
-	vector<pair<long long, long long>> output;
-	for (int i = 0; i < heap_sequence.heapSize(); i++)
-	{
-		output[i] = make_pair(heap_sequence.getElement(i), i);
-	}
+	vector<valueAndindex> output = heap.getElement();
 	sort(output.begin(), output.end(), cmp);
-	for (int i = 0; i < output.size(); i++)
+	for (int i = 0; i < heap.heapSize(); i++)
 	{
-		fout << output[i].first;
+		fout << output[i].first << " ";
 	}
 }
