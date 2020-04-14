@@ -1,12 +1,18 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 
 using namespace std;
 
+bool cmp(pair<long long, long long> a, pair<long long, long long> b)
+{
+	return (a.second < b.second);
+}
+
 class min_bheap
 {
-	vector<int> heap;
+	vector<pair<long long, long long>> heap;
 
 public:
 	int heapSize()
@@ -14,13 +20,13 @@ public:
 		return (heap.size());
 	}
 
-	void add(int value)
+	void add(pair<long long, long long> value)
 	{
 		heap.push_back(value);
 		int i = heapSize() - 1;
 		int parent = (i - 1) / 2;
 
-		while (i > 0 && heap[parent] > heap[i])
+		while ((i > 0) && (heap[parent].first > heap[i].first) || ((heap[parent].first==heap[i].first)&& (heap[parent].second>heap[i].second)))
 		{
 			swap(heap[i], heap[parent]);
 			i = parent;
@@ -39,7 +45,7 @@ public:
 			leftChild = 2 * index + 1;
 			rightChild = 2 * index + 2;
 
-			auto new_ind = (leftChild<heapSize() && heap[leftChild] < heap[rightChild]) ? leftChild : rightChild;
+			auto new_ind = (leftChild < heapSize() && heap[leftChild] < heap[rightChild]) ? leftChild : rightChild;
 
 			if (new_ind < heapSize() && heap[index] > heap[new_ind])
 			{
@@ -54,7 +60,6 @@ public:
 		} while (working);
 	}
 
-
 	void buildHeap(int arr[], int n)
 	{
 		vector<int> heap(arr, arr + n);
@@ -66,53 +71,50 @@ public:
 
 	int pickMin()
 	{
-		int result = heap[0];
+		int result = heap[0].first;
 		heap[0] = heap[heapSize() - 1];
-		heap.erase(heap.begin() + heapSize() -1 );
+		heap.erase(heap.begin() + heapSize() - 1);
 		heapify(0);
 		return result;
 	}
 
 	int getElement(int i)
 	{
-		return(heap[i]);
+		return (heap[i].first);
 	}
 };
 
-min_bheap heap;
+min_bheap heap_sequence;
 
-int main() 
+int main()
 {
-	ifstream fin("input.txt");
-    ofstream fout("output.txt");
-    long long int N,M;
-    fin >> N >> M;
-    for (long long int i = 0; i < N; i++) {
-        long long k;
-        fin >> k;
-        heap.add(k);
-    }
-/*
-    for (long  i =0; i< M; i++)
-	{
-		long long min1 = heap.pickMin();
-		long long min2 = heap.pickMin();
-		heap.add(min1 + min2);
-	}
+	ifstream fin;
+	ofstream fout;
+	fin.open("input.txt");
+	fout.open("output.txt");
 
-	for (long long i =0; i< N - M; i++)
+	long long N, M;
+	fin >> N >> M;
+	for (long long i = 0; i < N; i++)
 	{
-		fout << heap.getElement(i) << " ";
+		long long k;
+		fin >> k;
+		heap_sequence.add(make_pair(k, i));
 	}
-*/
-	for (int i = 0; i < N; i++)
+	for (long long int i = 0; i < M; i++)
 	{
-		fout << heap.getElement(i) << " ";
+		long long min1 = heap_sequence.pickMin();
+		long long min2 = heap_sequence.pickMin();
+		heap_sequence.add(make_pair(min1 + min2, N + i));
 	}
-	fout << '\n' << heap.pickMin() << '\n';
-	fout << '\n' << heap.pickMin() << '\n';
-	for (int i = 0; i < N; i++)
+	vector<pair<long long, long long>> output;
+	for (int i = 0; i < heap_sequence.heapSize(); i++)
 	{
-		fout << heap.getElement(i) << " ";
+		output[i] = make_pair(heap_sequence.getElement(i), i);
+	}
+	sort(output.begin(), output.end(), cmp);
+	for (int i = 0; i < output.size(); i++)
+	{
+		fout << output[i].first;
 	}
 }
