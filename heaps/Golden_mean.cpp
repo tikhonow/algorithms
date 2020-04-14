@@ -5,7 +5,7 @@
 
 using namespace std;
 
-class bheap
+class heap_max
 {
 	vector<int> heap;
 
@@ -80,10 +80,9 @@ public:
 		return (heap[i]);
 	}
 };
+heap_max left_max;
 
-bheap maxheap;
-
-class min_bheap
+class heap_min
 {
 	vector<int> heap;
 
@@ -156,52 +155,39 @@ public:
 		return (heap[i]);
 	}
 };
+heap_min right_min;
 
-min_bheap minheap;
 
-int main()
-{
-	ifstream fin("input.txt");
-	ofstream fout("output.txt");
-
-	int n;
-	fin >> n;
-	int tmp;
-	vector<int> sort_array;
-
-	for (int index = 0; index < n; index++)
-	{
-		fin >> tmp;
-		if (index == 0)
-			maxheap.add(tmp);
-		else
-		{
-			if (index % 2 != 0)
-			{
-				if (tmp < maxheap.getElement(0))
-				{
-					minheap.add(maxheap.pickMax());
-					maxheap.add(tmp);
-				}
-				else
-					minheap.add(tmp);
-			}
-			if (index % 2 == 0)
-			{
-				if (tmp > minheap.getElement(0))
-				{
-					maxheap.add(minheap.getElement(0));
-					minheap.add(tmp);
-				}
-				else
-					maxheap.add(tmp);
-			}
-		}
-		sort_array.push_back(maxheap.getElement(0));
-	}
-
-	for (int i = 0; i < n; i++)
-	{
-		fout << sort_array[i] << " ";
-	}
+int main() {
+    ifstream fin("input.txt");
+    ofstream fout("output.txt");
+    int n;
+    fin >> n;
+    int tmp;
+    vector<int> sort_array;
+    for (int index = 0; index < n; index++) {
+        fin >> tmp;
+        if (index == 0)
+            left_max.add(tmp);
+        else {
+            if (index % 2 != 0) {
+                if (tmp < left_max.getElement(0)) {
+                    right_min.add(left_max.pickMax());
+                    left_max.add(tmp);
+                } else
+                    right_min.add(tmp);
+            }
+            if (index % 2 == 0) {
+                if (tmp > right_min.getElement(0)) {
+                    left_max.add(right_min.pickMin());
+                    right_min.add(tmp);
+                } else
+                    left_max.add(tmp);
+            }
+        }
+        sort_array.push_back(left_max.getElement(0));
+    }
+    for (int i = 0; i < n; i++) {
+        fout << sort_array[i] << " ";
+    }
 }
