@@ -1,48 +1,49 @@
 #include <fstream>
 #include <vector>
 #include <algorithm>
+#include <stack>
 #include <cmath>
 
 using namespace std;
 
 int main()
 {
-    ifstream fin("input.txt");
-    ofstream fout("output.txt");
+    ifstream fin("linear.in");
+    ofstream fout("linear.out");
     int N;
     fin >> N;
-    vector<int> particle_storage;
-    vector<int> collision_times;
-    for (int i = 0; i < N; i++)
+    stack <long long> particle_storage;
+    vector<long long> collision_times;
+    for (long long i = 0; i < N; i++)
     {
-        float x, y;
+        double x, y;
         fin >> x >> y;
         if (y == 1)
         {
-            particle_storage.push_back(x);
+            particle_storage.push(x);
         }
         else
         {
             if (particle_storage.size() != 0)
             {
-                collision_times.push_back(ceil((x - particle_storage.back()) / 2));
-                particle_storage.pop_back();
+                collision_times.push_back(ceil(abs((x - particle_storage.top()) / 2)));
+                particle_storage.pop();
             }
         }
     }
     sort(collision_times.begin(), collision_times.end());
-    int count_requests;
+    long long  count_requests;
     fin >> count_requests;
-    for (int j = 0; j < count_requests; j++)
+    for (long long j = 0; j < count_requests; j++)
     {
-        int time;
-        int k = 0;
+        long long time;
+        long long  k = 0;
         fin >> time;
         while (k < collision_times.size() && collision_times[k] <= time)
         {
             k++;
         }
-        int count_remaining_particles = N - 2*k;
+        long long count_remaining_particles = N - 2*k;
         fout << count_remaining_particles << '\n';
     }
 }
