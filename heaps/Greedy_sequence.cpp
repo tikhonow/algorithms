@@ -90,11 +90,8 @@ min_bheap heap;
 
 int main()
 {
-	ifstream fin;
-	ofstream fout;
-	fin.open("input.txt");
-	fout.open("output.txt");
-
+	ifstream fin("input.txt");
+    ofstream fout("output.txt");
 	long long N, M;
 	fin >> N >> M;
 	for (long long i = 0; i < N; i++)
