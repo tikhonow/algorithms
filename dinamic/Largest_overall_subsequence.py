@@ -23,4 +23,4 @@ while i > 0 and j > 0:
     else: 
         j -= 1 
 sub = sub[::-1]
-fout.write(''.join(sub))
+fout.write(''.join(sub) )
