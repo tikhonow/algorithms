@@ -28,7 +28,7 @@ int check_star(int left, int star, int right)
 int main()
 {
     ifstream fin("input.txt");
-    ofstream fout("output.txt");
+    ofstream fout("output.txt"); 
     int N;
     fin >> N;
     string S;
