@@ -1,90 +1,81 @@
 #include <fstream>
 #include <vector>
-#include <fstream>
-
 using namespace std;
 
-class Sorts
+vector<int> arr1;
+vector<int> arr2;
+void merge_and_finding_inversions(int low, int high, int mid);
+int count;
+
+void mergesort(int low, int high)
 {
-    int count = 0;
-
-private:
-    void merge(int arr[], int l, int m, int r)
+    int mid;
+    if (low < high)
     {
-        int index_left, index_right, k;
-        int n1 = m - l + 1;
-        int n2 = r - m;
+        mid = (low + high) / 2;
+        mergesort(low, mid);
+        mergesort(mid + 1, high);
+        merge_and_finding_inversions(low, high, mid);
+    }
+    return;
+}
 
-        int L[n1], R[n2];
 
-        for (index_left = 0; index_left < n1; index_left++)
-            L[index_left] = arr[l + index_left];
-        for (index_right = 0; index_right < n2; index_right++)
-            R[index_right] = arr[m + 1 + index_right];
-        index_left = 0;
-        index_right = 0;
-        k = l;
-        while (index_left < n1 && index_right < n2)
+void merge_and_finding_inversions(int low, int high, int mid)
+{
+    int i, j, k;
+    i = low;
+    k = low;
+    j = mid + 1;
+
+    while (i <= mid && j <= high)
+    {
+        if (arr1[i] < arr1[j])
         {
-            if (L[index_left] <= R[index_right])
-            {
-                arr[k] = L[index_left];
-                index_left++;
-            }
-            else
-            {
-                arr[k] = R[index_right];
-                index_right++;
-                count = index_left + 1;
-            }
+            arr2[k] = arr1[i];
             k++;
+            i++;
         }
-
-        while (index_left < n1)
+        else
         {
-            arr[k] = L[index_left];
-            index_left++;
+            arr2[k] = arr1[j];
             k++;
-        }
-        while (index_right < n2)
-        {
-            arr[k] = R[index_right];
-            index_right++;
-            k++;
+            j++;
+            count += mid - i + 1;
         }
     }
-
-public:
-    void mergeSort(int arr[], int l, int r)
+    while (i <= mid)
     {
-        if (l < r)
-        {
-            int m = l + (r - l) / 2;
-
-            mergeSort(arr, l, m);
-            mergeSort(arr, m + 1, r);
-
-            merge(arr, l, m, r);
-        }
+        arr2[k] = arr1[i];
+        k++;
+        i++;
     }
-    int inverse()
+    while (j <= high)
     {
-        return count;
+        arr2[k] = arr1[j];
+        k++;
+        j++;
     }
-};
-Sorts sort;
+    for (i = low; i < k; i++)
+    {
+        arr1[i] = arr2[i];
+    }
+}
 int main()
 {
-
     ifstream fin("input.txt");
     ofstream fout("output.txt");
+
     int N;
     fin >> N;
-    int arr[N];
+    count = 0;
+    arr1.resize(N);
+    arr2.resize(N);
     for (int i = 0; i < N; i++)
     {
-        fin >> arr[i];
+        fin >> arr1[i];
     }
-    sort.mergeSort(arr, 0, N - 1);
-    fout << sort.inverse();
+    mergesort(0, N - 1);
+
+    fout << count << "\n";
 }
