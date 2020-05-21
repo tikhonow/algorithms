@@ -8,7 +8,7 @@ std::vector<std::string> bucket_sort(std::vector<std::string> array_words)
     for (int i = 2; i > -1; i--)
     {
         std::vector<std::vector<std::string>> support_array;
-        support_array.resize(123);
+        support_array.resize(256);
 
         for (int j = 0; j < array_words.size(); j++)
         {
@@ -52,6 +52,7 @@ int main()
     std::vector<std::string> sorted_array;
 
     sorted_array = bucket_sort(array_of_words);
+
     for (int i = 0; i < n; i++)
     {
         fout << sorted_array[i] << std::endl;
