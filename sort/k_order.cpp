@@ -4,9 +4,7 @@
 #include <vector>
 #include <ctime>
 
-using namespace std;
-
-int Partition(vector<int> &Array, int left, int right)
+int Partition(std::vector<int> &Array, int left, int right)
 {
     int supp = Array[(left + right) / 2];
     int i = left - 1;
@@ -27,18 +25,18 @@ int Partition(vector<int> &Array, int left, int right)
         {
             return j;
         }
-        swap(Array[i], Array[j]);
+        std::swap(Array[i], Array[j]);
     }
 }
 
-int RandomPartition(vector<int> &Array, int left, int right)
+int RandomPartition(std::vector<int> &Array, int left, int right)
 {
     int i = left + rand() % (right - left + 1);
-    swap(Array[right], Array[i]);
+    std::swap(Array[right], Array[i]);
     return Partition(Array, left, right);
 }
 
-int k_order_stat(vector<int> &Array, int K)
+int k_order_stat(std::vector<int> &Array, int K)
 {
     int left = 0;
     int right = Array.size() - 1;
@@ -66,15 +64,14 @@ int k_order_stat(vector<int> &Array, int K)
 int main()
 {
     srand(time(NULL));
-    ifstream fin("input.txt");
-    ofstream fout("output.txt");
+    std::ifstream fin("input.txt");
+    std::ofstream fout("output.txt");
     int N = 0;
     int K = 0;
     int result = 0;
 
-    fin >> N;
-    vector<int> Array(N);
-    fin >> K;
+    fin >> N >> K;
+    std::vector<int> Array(N);
     K--;
 
     for (int i = 0; i < N; i++)
