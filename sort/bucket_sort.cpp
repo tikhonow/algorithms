@@ -2,61 +2,58 @@
 #include <vector>
 #include <string>
 
-using namespace std;
-
-vector<string> bucket_sort(vector<string> mass_words)
+std::vector<std::string> bucket_sort(std::vector<std::string> array_words)
 {
 
     for (int i = 2; i > -1; i--)
     {
-        vector<vector<string>> support_mass;
-        support_mass.resize(123);
+        std::vector<std::vector<std::string>> support_array;
+        support_array.resize(123);
 
-        for (int j = 0; j < mass_words.size(); j++)
+        for (int j = 0; j < array_words.size(); j++)
         {
-            string letter = mass_words[j];
-            support_mass[(int)letter[i]].push_back(letter);
+            std::string letter = array_words[j];
+            support_array[(int)letter[i]].push_back(letter);
         }
 
-        mass_words.clear();
+        array_words.clear();
 
-        for (int j = 0; j < support_mass.size(); j++)
+        for (int j = 0; j < support_array.size(); j++)
         {
-            if (support_mass[j].size() > 0)
+            if (support_array[j].size() > 0)
             {
-                for (int l = 0; l < support_mass[j].size(); l++)
+                for (int l = 0; l < support_array[j].size(); l++)
                 {
-                    mass_words.push_back(support_mass[j][l]);
+                    array_words.push_back(support_array[j][l]);
                 }
             }
         }
     }
-    return mass_words;
+    return array_words;
 }
 
 int main()
 {
-    ifstream fin("input.txt");
-    ofstream fout("output.txt");
+    std::ifstream fin("input.txt");
+    std::ofstream fout("output.txt");
 
     int n;
     fin >> n;
 
-    vector<string> mass_of_words;
-    string word;
+    std::vector<std::string> array_of_words;
+    std::string word;
 
     for (int i = 0; i < n; i++)
     {
         fin >> word;
-        mass_of_words.push_back(word);
+        array_of_words.push_back(word);
     }
 
-    vector<string> sorted_mass;
+    std::vector<std::string> sorted_array;
 
-    sorted_mass = bucket_sort(mass_of_words);
-
+    sorted_array = bucket_sort(array_of_words);
     for (int i = 0; i < n; i++)
     {
-        fout << sorted_mass[i] << endl;
+        fout << sorted_array[i] << std::endl;
     }
 }
