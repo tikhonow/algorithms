@@ -1,33 +1,53 @@
 #include <fstream>
+#include <vector>
+#include <algorithm>
+#define MAX 100000
 using namespace std;
-int inverses(int *A, int N)
-{ 
-    int count = 0;
-    for(int i = 0; i < N - 1; i++)
+
+long long array[MAX];
+long long n, i, j;
+long long inversions;
+
+void merge(long long left, long long middle, long long right)
+{
+  long long i = left, j = middle + 1;
+  while((i <= middle) && (j <= right))
+  {
+    if (array[i] <= array[j])
+      i++;
+    else
     {
-        for (int j = i + 1; j < N; j++)
-        {
-            if( A[i] > A[j] )
-            {
-                count++;   
-            }
-            
-        }
+      j++;
+      inversions += middle - i + 1;
     }
-    return count;
+  }
+  sort(array + left, array + right + 1);
 }
+
+void mergeSort(long long left, long long right)
+{ 
+  if (left < right)
+  {
+    long long middle = (left + right) / 2;
+    mergeSort(left,middle);
+    mergeSort(middle+1,right);
+    merge(left, middle, right);
+  }
+}
+
 int main()
 {
-    ofstream fout;
-    fout.open("output.txt");
-    ifstream fin;
-    fin.open("input.txt");
-    int N;
-    fin >> N;
-    int A[N];
-    for(int i = 0; i< N; i++)
+    ifstream fin("input.txt");
+    ofstream fout("output.txt");
+    fin >> n;
+    for (i = 0; i < n; i++)
     {
-        fin >>A[i];
+        fin >> array[i];
     }
-    fout << inverses(A, N);
+    fin.close();
+    mergeSort(0, n - 1);
+    fout << inversions;
+    fout.close();
+  return 0;
+
 }
