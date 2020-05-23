@@ -2,7 +2,6 @@
 #include <vector>
 #include <algorithm>
 #define MAX 100000
-using namespace std;
 
 long long array[MAX];
 long long n, i, j;
@@ -21,7 +20,7 @@ void merge(long long left, long long middle, long long right)
       inversions += middle - i + 1;
     }
   }
-  sort(array + left, array + right + 1);
+  std::sort(array + left, array + right + 1);
 }
 
 void mergeSort(long long left, long long right)
@@ -37,8 +36,8 @@ void mergeSort(long long left, long long right)
 
 int main()
 {
-    ifstream fin("input.txt");
-    ofstream fout("output.txt");
+    std::ifstream fin("input.txt");
+    std::ofstream fout("output.txt");
     fin >> n;
     for (i = 0; i < n; i++)
     {
