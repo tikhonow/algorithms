@@ -1,18 +1,17 @@
-#include <iostream>
-using namespace std;
+#include <fstream>
 
 int main() 
 { 
+    std::ifstream fin("input.txt");
+    std::ofstream fout("output.txt");
     int size_array;
-    int K;
-    cin >> size_array;
-    cin >> K;
+    fin >> size_array;
     int array[size_array];
     int min;
     int min_i;
     for(int i = 0; i < size_array; i++)
     {
-        cin >> array[i];
+        fin >> array[i];
     }
     for(int i = 0; i < size_array; i++) 
     {
@@ -30,7 +29,7 @@ int main()
     }
     for (int k = 0; k< size_array; k++)
     {
-        cout << array[K] << ' ';
+        fout << array[k] << ' ';
     }
 
     return 0; 
