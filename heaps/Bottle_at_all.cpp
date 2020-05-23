@@ -2,11 +2,9 @@
 #include <iostream>
 #include <fstream>
 
-using namespace std;
-
 class bheap
 {
-	vector<int> heap;
+	std::vector<int> heap;
 
 public:
 	int heapSize()
@@ -23,7 +21,7 @@ public:
 		while (i > 0 && heap[parent] < heap[i])
 		{
 			//cout << heap[i];
-			swap(heap[i], heap[parent]);
+			std::swap(heap[i], heap[parent]);
 			i = parent;
 			parent = (i - 1) / 2;
 		}
@@ -44,7 +42,7 @@ public:
 
 			if (new_ind < heapSize() && heap[index]<heap[new_ind])
 			{
-				swap(heap[index], heap[new_ind]);
+				std::swap(heap[index], heap[new_ind]);
 				index = new_ind;
 			}
 			else
@@ -58,7 +56,7 @@ public:
 
 	void buildHeap(int arr[], int n)
 	{
-		vector<int> heap(arr, arr + n);
+		std::vector<int> heap(arr, arr + n);
 		for (int i = heapSize() / 2; i >= 0; i--)
 		{
 			heapify(i);
@@ -84,8 +82,8 @@ public:
 bheap heap;
 
 int main() {
-	ifstream fin("input.txt");
-    ofstream fout("output.txt");
+	std::ifstream fin("input.txt");
+    std::ofstream fout("output.txt");
     long long int N, M;
     fin >> N >> M;
     for (long long int i = 0; i < N; i++) {

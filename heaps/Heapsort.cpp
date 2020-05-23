@@ -1,11 +1,9 @@
 #include <vector>
 #include <fstream>
 
-using namespace std;
-
 class bheap
 {
-    vector<int> heap;
+    std::vector<int> heap;
 
 public:
     int heapSize()
@@ -22,7 +20,7 @@ public:
         while (i > 0 && heap[parent] < heap[i])
         {
             //cout << heap[i];
-            swap(heap[i], heap[parent]);
+            std::swap(heap[i], heap[parent]);
             i = parent;
             parent = (i - 1) / 2;
         }
@@ -38,8 +36,8 @@ bheap heap;
 
 int main()
 {
-    ifstream fin("input.txt");
-    ofstream fout("output.txt");
+    std::ifstream fin("input.txt");
+    std::ofstream fout("output.txt");
     long long int N;
     fin >> N;
     for (long long int i = 2; i <= N; i++)

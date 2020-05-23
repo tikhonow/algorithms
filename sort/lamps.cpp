@@ -1,11 +1,9 @@
 #include <fstream>
-using namespace std;
+
 int main()
 {
-    ofstream fout;
-    fout.open("output.txt");
-    ifstream fin;
-    fin.open("input.txt");
+    std::ifstream fin("input.txt");
+    std::ofstream fout("output.txt");
     int N;
     fin >> N;
     int array[101] = {0};

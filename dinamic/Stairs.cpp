@@ -1,10 +1,11 @@
 #include <fstream>
+
 #define MAX(a,b) ((a) > (b) ? (a) : (b))
-using namespace std;
+
 int main()
 {
-    ifstream fin("input.txt");
-    ofstream fout("output.txt");
+    std::ifstream fin("input.txt");
+    std::ofstream fout("output.txt");
     long long n, a[102], b;
     fin >> n >> a[1];
     a[0] = 0;

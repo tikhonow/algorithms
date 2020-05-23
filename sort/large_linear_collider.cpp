@@ -4,16 +4,14 @@
 #include <stack>
 #include <cmath>
 
-using namespace std;
-
 int main()
 {
-    ifstream fin("linear.in");
-    ofstream fout("linear.out");
+    std::ifstream fin("linear.in");
+    std::ofstream fout("linear.out");
     int N;
     fin >> N;
-    vector <long long> particle_storage;
-    vector <long long> collision_times;
+    std::vector <long long> particle_storage;
+    std::vector <long long> collision_times;
     for (long long i = 0; i < N; i++)
     {
         double x, y;

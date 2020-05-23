@@ -1,11 +1,8 @@
 #include <fstream>
 #include <algorithm>
 #include <vector>
-#include <iostream>
+
 #define MIN(a,b) ((a) < (b) ? (a) : (b))
-
-
-using namespace std;
 
 int cmp (const void * a, const void * b)
 {
@@ -14,8 +11,8 @@ int cmp (const void * a, const void * b)
 
 int main()
 {
-    ifstream fin("input.txt");
-    ofstream fout("output.txt");
+    std::ifstream fin("input.txt");
+    std::ofstream fout("output.txt");
     int N, n;
     fin >> N;
     int nails[105];
