@@ -14,6 +14,7 @@ FEFU. Applied Mathematics and Computer Science 1 year
 - [Dinamic programming](https://imcs.dvfu.ru/cats/main.pl?f=problems;cid=3276934;sid=R5QbtWBxuIqCbsXfIluInk4N3i02N5 "Динамическое программирование")
 - [Brute force](https://imcs.dvfu.ru/cats/main.pl?f=problems;cid=4826824;sid=R5QbtWBxuIqCbsXfIluInk4N3i02N5 "Перебор")
 - [AVL,hash table](https://imcs.dvfu.ru/cats/main.pl?f=problems;cid=4840993;sid=oYp48UO6UJu5QgHGGOOM9SfzkYoDZi "Хеш-таблицы, AVL деревья")
+- [Graphs](https://imcs.dvfu.ru/cats/main.pl?f=problems;cid=4863277;sid=R2O987uqiPvFEbCRc8Cd1mtGTmcuqQ "Графы")
 ---
 - [Challenges](https://imcs.dvfu.ru/cats/main.pl?f=problems;cid=4826850;sid=oYp48UO6UJu5QgHGGOOM9SfzkYoDZi "Сложные задачи")
 - [Lidar](https://imcs.dvfu.ru/cats/main.pl?f=problems;cid=4826824;sid=R5QbtWBxuIqCbsXfIluInk4N3i02N5 "Дополнительное задание от Алексея Щурова")
