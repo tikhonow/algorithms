@@ -1,10 +1,8 @@
-/* AVL Tree Implementation in C++   */
-/* Harish R                         */
+#include<algorithm>
+#include<fstream>
 
-#include <algorithm>
-#include<iostream>
-
-using namespace std;
+std::ofstream fout("output.txt");
+std::ifstream fin ("input.txt");
 
 class BST
 {
@@ -59,7 +57,7 @@ class BST
             }
         }
 
-        t->height = max(height(t->left), height(t->right))+1;
+        t->height = std::max(height(t->left), height(t->right))+1;
         return t;
     }
 
@@ -68,8 +66,8 @@ class BST
         node* u = t->left;
         t->left = u->right;
         u->right = t;
-        t->height = max(height(t->left), height(t->right))+1;
-        u->height = max(height(u->left), t->height)+1;
+        t->height = std::max(height(t->left), height(t->right))+1;
+        u->height = std::max(height(u->left), t->height)+1;
         return u;
     }
 
@@ -78,8 +76,8 @@ class BST
         node* u = t->right;
         t->right = u->left;
         u->left = t;
-        t->height = max(height(t->left), height(t->right))+1;
-        u->height = max(height(t->right), t->height)+1 ;
+        t->height = std::max(height(t->left), height(t->right))+1;
+        u->height = std::max(height(t->right), t->height)+1 ;
         return u;
     }
 
@@ -119,25 +117,20 @@ class BST
     {
         node* temp;
 
-        // Element not found
         if(t == NULL)
             return NULL;
 
-        // Searching for element
         else if(x < t->data)
             t->left = remove(x, t->left);
         else if(x > t->data)
             t->right = remove(x, t->right);
 
-        // Element found
-        // With 2 children
         else if(t->left && t->right)
         {
             temp = findMin(t->right);
             t->data = temp->data;
             t->right = remove(t->data, t->right);
         }
-        // With one or zero child
         else
         {
             temp = t;
@@ -150,26 +143,19 @@ class BST
         if(t == NULL)
             return t;
 
-        t->height = max(height(t->left), height(t->right))+1;
+        t->height = std::max(height(t->left), height(t->right))+1;
 
-        // If node is unbalanced
-        // If left node is deleted, right case
         if(height(t->left) - height(t->right) == 2)
         {
-            // right right case
             if(height(t->left->left) - height(t->left->right) == 1)
                 return singleLeftRotate(t);
-            // right left case
             else
                 return doubleLeftRotate(t);
         }
-        // If right node is deleted, left case
         else if(height(t->right) - height(t->left) == 2)
         {
-            // left left case
             if(height(t->right->right) - height(t->right->left) == 1)
                 return singleRightRotate(t);
-            // left right case
             else
                 return doubleRightRotate(t);
         }
@@ -194,7 +180,7 @@ class BST
         if(t == NULL)
             return;
         inorder(t->left);
-        cout << t->data << " ";
+        fout << t->data << " ";
         inorder(t->right);
     }
 
@@ -214,28 +200,21 @@ public:
         root = remove(x, root);
     }
 
-    void display()
+    void output()
     {
         inorder(root);
-        cout << endl;
+        fout << std::endl;
     }
 };
+BST avl;
 
 int main()
 {
-    BST t;
     int a = 1;
     while (a != 0)
     {
-        cin >> a;
-        if (a > 0)
-        {
-            t.insert(a);
-        }
-        else
-        {
-            t.remove(-a);
-        }
+        fin >> a;
+        (a > 0) ? avl.insert(a) : avl.remove(-a);
     }
-    t.display();
+    avl.output();
 }
