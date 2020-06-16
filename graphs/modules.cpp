@@ -2,6 +2,7 @@
 #include <fstream>
 
 std::vector<int> g[100000];
+std::vector<int> ans;
 bool used[100000] = {false};
 int N;
 
@@ -18,16 +19,15 @@ void dfs(int v)
 
 int topsort()
 {
-    int counter = 0;
     for (int i = 0; i < N; ++i)
     {
         if (!used[i])
         {
             dfs(i);
-            counter++;
+            ans.push_back(i);
         }
     }
-       return counter;
+       return ans.size();
 }
 
 int main()
