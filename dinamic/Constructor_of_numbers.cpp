@@ -65,6 +65,7 @@ int main()
         }
         s = s + p;
     }
+    
     int answer = max_cool - s;
     fout << answer;
 }
