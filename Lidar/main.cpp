@@ -1,96 +1,16 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
 #include <fstream>
-#include <iomanip>
-#include <functional>
+#include <cstring>
+#include "filter.h"
 
-using namespace std;
-
-//Filter object containing range and temporal median filter functions
-class filters
-{
-private:
-
-	float min = 0.03;
-	float max = 50.0;
-
-public:
-	filters() {}
-	vector<float> update(vector<float> &scan);
-	vector<float> median(vector<float> &data, int q);
-	void  set_min (float number1) {
-		min = number1;
-    }
-	void  set_max (float number2) {
-		max = number2;
-    }
-	~filters() {}
-
-};
-
-//Update function
-//Takes in an array of float values and returns a filtered output with values within the range of [0.03, 50.0]
-vector<float> filters::update(vector<float> &scan)
-{
-	vector<float> updated_scan(scan.size(), 0);
-	for (int i = 0; i < scan.size(); i++)
-	{
-		if (scan[i] < min)
-			updated_scan[i] = min;
-		else if (scan[i] > max)
-			updated_scan[i] = max;
-		else
-			updated_scan[i] = scan[i];
-	}
-
-	return updated_scan;
-}
-
-//Median function
-//Takes in an array of float values and returns the median of the array
-vector<float> filters::median(vector<float> &data, int q)
-{
-	vector<float> updated_scan(data.size(), 0);
-	for (int i = 0; i < data.size(); i++)
-	{
-		const auto median_it = data.begin() + data.size() / 2.0;
-		nth_element(data.begin(), median_it, data.end());
-		auto median = *median_it;
-
-		if (data.size() % 2 == 0)
-		{
-			const auto median_it1 = data.begin() + data.size() / 2.0 - 1.0;
-			const auto median_it2 = data.begin() + data.size() / 2.0;
-
-			std::nth_element(data.begin(), median_it1, data.end());
-			const auto e1 = *median_it1;
-
-			std::nth_element(data.begin(), median_it2, data.end());
-			const auto e2 = *median_it2;
-
-			updated_scan[i] = (e1 + e2) / 2.0;
-		}
-		else
-		{
-			const auto median_it = data.begin() + data.size() / 2.0;
-			std::nth_element(data.begin(), median_it, data.end());
-			updated_scan[i] = *median_it;
-		}
-	}
-
-	return updated_scan;
-}
-
-//Println function
-//Prints a line
 void println()
 {
 	for (int i = 0; i < 50; i++)
 	{
-		cout << "-";
+		std::cout << "-";
 	}
-	cout << endl;
+	std::cout << std::endl;
 }
 
 
@@ -107,46 +27,45 @@ int main(int argc, char *argv[])
 
 	//Init variables
 	filters test;
-	cout << "Input a and b" <<  endl;
 	float min1, min2;
 	for (int count=0; count < argc; ++count)
 	{
-		if (argv[count] == "limit")
+		if (strcmp(argv[count], "-limit") == 0)
 		{
-			cout << "Enter parameters for the threshold filter" << endl;
-			cin >> min1 >> min2;
+			std::cout << "Enter parameters for the threshold filter" << std::endl;
+			std::cin >> min1 >> min2;
 			test.set_min(min1);
 			test.set_max(min2);
 		}
-		if (argv[count] == "size")
+		if (strcmp(argv[count], "-size") == 0)
 		{
-			cout << "Input size" << endl;
-			cin >> a >> b;
+			std::cout << "Input size" << std::endl;
+			std::cin >> a >> b;
 
 		}
 	}
-	vector<float> scan;
-	vector<float> range_output;
-	vector<float> med_data;
-	vector<float> temp;
-	vector<vector<float>> med_output;
-	vector<vector<float>> twod_vector;
-	twod_vector.resize(5, vector<float>(5, 0));
-	med_output.resize(5, vector<float>(5, 0));
+	std::vector<float> scan;
+	std::vector<float> range_output;
+	std::vector<float> med_data;
+	std::vector<float> temp;
+	std::vector<std::vector<float>> med_output;
+	std::vector<std::vector<float>> twod_vector;
+	twod_vector.resize(5, std::vector<float>(5, 0));
+	med_output.resize(5, std::vector<float>(5, 0));
 
-	fstream f;
+	std::fstream f;
 
 
 	//TEMPORAL MEDIAN DEMO
-	cout << endl
-		 << endl;
-	cout << "Median Filter" << endl;
+	std::cout << std::endl
+		 << std::endl;
+	std::cout << "Median Filter" << std::endl;
 	println();
 
 	scan.clear(); //Clean up scan vector
 
 	//Read in file for testing temporal median function
-	f.open("scans.txt", ios::in);
+	f.open("scans.txt", std::ios::in);
 	while (!f.eof())
 	{
 		f >> num;
@@ -179,16 +98,16 @@ int main(int argc, char *argv[])
 	}
 
 	//Print 2-D vector
-	cout << left << setw(10) << "Num  | " << left << setw(10) << "Scan" << endl;
+	std::cout << std::left << std::setw(10) << "Num  | " << std::left << std::setw(10) << "Scan" << std::endl;
 	println();
 	for (int i = 0; i < a; i++)
 	{
-		cout << left << setw(5) << i << "|";
+		std::cout << std::left << std::setw(5) << i << "|";
 		for (int j = 0; j < b; j++)
 		{
-			cout << right << setw(5) << twod_vector[i][j] << "|";
+			std::cout << std::right << std::setw(5) << twod_vector[i][j] << "|";
 		}
-		cout << endl;
+		std::cout << std::endl;
 	}
 
 	count = 0; //Reset counter
@@ -208,18 +127,18 @@ int main(int argc, char *argv[])
 	}
 
 	//Print an updated vector containing the temporal median of the data set
-	cout << endl
-		 << endl;
-	cout << left << setw(10) << "Num  | " << left << setw(10) << "Update" << endl;
+	std::cout << std::endl
+		 << std::endl;
+	std::cout << std::left << std::setw(10) << "Num  | " << std::left << std::setw(10) << "Update" << std::endl;
 	println();
 	for (int i = 0; i < a; i++)
 	{
-		cout << left << setw(5) << i << "|";
+		std::cout << std::left << std::setw(5) << i << "|";
 		for (int j = 0; j < b; j++)
 		{
-			cout << right << setw(5) << med_output[i][j] << "|";
+			std::cout << std::right << std::setw(5) << med_output[i][j] << "|";
 		}
-		cout << endl;
+		std::cout << std::endl;
 	}
 
 	test.~filters(); //Deconstructor
