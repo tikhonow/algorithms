@@ -11,17 +11,22 @@ using namespace std;
 class filters
 {
 private:
-	float min = -90.03;
-	float max = 50000.0;
-	/*
+
 	float min = 0.03;
 	float max = 50.0;
-*/
+
 public:
 	filters() {}
 	vector<float> update(vector<float> &scan);
 	vector<float> median(vector<float> &data, int q);
+	void  set_min (float number1) {
+		min = number1;
+    }
+	void  set_max (float number2) {
+		max = number2;
+    }
 	~filters() {}
+
 };
 
 //Update function
@@ -88,11 +93,38 @@ void println()
 	cout << endl;
 }
 
-int main()
+
+int main(int argc, char *argv[])
 {
+	int row = 0;
+	int col = 0;
+	float num = 0;
+	int count = 0; //generic counter
+	int D = 5;	   //temporal median D variable
+	int a = 5;	   //строки
+	int b = 3;	   //столбцы
+	int q = 5;
 
 	//Init variables
 	filters test;
+	cout << "Input a and b" <<  endl;
+	float min1, min2;
+	for (int count=0; count < argc; ++count)
+	{
+		if (argv[count] == "limit")
+		{
+			cout << "Enter parameters for the threshold filter" << endl;
+			cin >> min1 >> min2;
+			test.set_min(min1);
+			test.set_max(min2);
+		}
+		if (argv[count] == "size")
+		{
+			cout << "Input size" << endl;
+			cin >> a >> b;
+
+		}
+	}
 	vector<float> scan;
 	vector<float> range_output;
 	vector<float> med_data;
@@ -103,19 +135,12 @@ int main()
 	med_output.resize(5, vector<float>(5, 0));
 
 	fstream f;
-	int row = 0;
-	int col = 0;
-	float num = 0;
-	int count = 0; //generic counter
-	int D = 5;	   //temporal median D variable
-	int a = 5; //строки
-	int b = 3;//столбцы
-	int q = 5;
+
 
 	//TEMPORAL MEDIAN DEMO
 	cout << endl
 		 << endl;
-	cout << "Temporal Median Filter" << endl;
+	cout << "Median Filter" << endl;
 	println();
 
 	scan.clear(); //Clean up scan vector
