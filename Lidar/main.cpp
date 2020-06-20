@@ -107,22 +107,21 @@ int main()
 	int col = 0;
 	float num = 0;
 	int count = 0; //generic counter
-	int n = 5;	   //temporal median n variable
 	int D = 5;	   //temporal median D variable
-	int a = 5;
-	int b = 3;
+	int a = 5; //строки
+	int b = 3;//столбцы
 	int q = 5;
 
 	//TEMPORAL MEDIAN DEMO
 	cout << endl
 		 << endl;
-	cout << "Temporal Median Filter Demo" << endl;
+	cout << "Temporal Median Filter" << endl;
 	println();
 
 	scan.clear(); //Clean up scan vector
 
 	//Read in file for testing temporal median function
-	f.open("input.txt", ios::in);
+	f.open("scans.txt", ios::in);
 	while (!f.eof())
 	{
 		f >> num;
@@ -170,9 +169,9 @@ int main()
 	count = 0; //Reset counter
 
 	//Median function is called to find the temporal median of the data set
-	for (int i = 0; i < D; i++)
+	for (int i = 0; i < b; i++)
 	{
-		for (int j = 0; j < D; j++)
+		for (int j = 0; j < a; j++)
 		{
 			med_data.push_back(twod_vector[j][i]);
 			temp = test.median(med_data, q);
