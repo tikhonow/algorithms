@@ -2,9 +2,8 @@
 #include <fstream>
 
 std::vector<int> g[100000];
-std::vector<int> ans;
 bool used[100000] = {false};
-int N;
+int N, count;
 
 void dfs(int v)
 {
@@ -15,6 +14,9 @@ void dfs(int v)
         if (!used[to])
             dfs(to);
     }
+    count++;
+    
+
 }
 
 int topsort()
@@ -24,10 +26,9 @@ int topsort()
         if (!used[i])
         {
             dfs(i);
-            ans.push_back(i);
         }
     }
-       return ans.size();
+    return count;
 }
 
 int main()
