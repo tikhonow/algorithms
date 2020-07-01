@@ -9,8 +9,8 @@ class BST
     struct node
     {
         int data;
-        node* left;
-        node* right;
+        node* left = nullptr;
+        node* right = nullptr;
         int height;
     };
 
