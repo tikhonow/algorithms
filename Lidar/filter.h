@@ -3,7 +3,7 @@
 #include <iomanip>
 #include <functional>
 
-//Filter object containing range and temporal median filter functions
+//класс в котором реализован медианный и пороговый фильтр
 class filters
 {
 private:
@@ -25,8 +25,7 @@ public:
 
 };
 
-//Update function
-//Takes in an array of float values and returns a filtered output with values within the range of [0.03, 50.0]
+//пороговый фильтр
 std::vector<float> filters::update(std::vector<float> &scan)
 {
 	std::vector<float> updated_scan(scan.size(), 0);
@@ -43,8 +42,7 @@ std::vector<float> filters::update(std::vector<float> &scan)
 	return updated_scan;
 }
 
-//Median function
-//Takes in an array of float values and returns the median of the array
+//медианный фильр
 std::vector<float> filters::median(std::vector<float> &data, int q)
 {
 	std::vector<float> updated_scan(data.size(), 0);
